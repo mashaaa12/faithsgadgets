@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>F11 3 Axis Foldable Gimbal | FAITH'S GADGETS</title>
+
+    <!-- MAIN CSS -->
+    <link rel="stylesheet" href="style.css">
+
+    <!-- FONT AWESOME -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <style>
+
+        /* ================================
+           PRODUCT PAGE
+        ================================ */
+
+        .product-page {
+
+            max-width: 1100px;
+
+            margin: 50px auto;
+
+            padding: 20px;
+
+        }
+
+
+        .product-container {
+
+            display: grid;
+
+            grid-template-columns: 1fr 1fr;
+
+            gap: 40px;
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 15px;
+
+            box-shadow:
+                0 5px 25px rgba(0, 0, 0, 0.08);
+
+        }
+
+
+        /* ================================
+           PRODUCT IMAGE
+        ================================ */
+
+        .product-image-container {
+
+            display: flex;
+
+            align-items: center;
+
+            justify-content: center;
+
+            background: #f5f5f5;
+
+            border-radius: 12px;
+
+            padding: 20px;
+
+            min-height: 400px;
+
+        }
+
+
+        .product-image-container img {
+
+            width: 100%;
+
+            max-width: 500px;
+
+            max-height: 500px;
+
+            object-fit: contain;
+
+            border-radius: 10px;
+
+        }
+
+
+        /* ================================
+           PRODUCT DETAILS
+        ================================ */
+
+        .product-details h1 {
+
+            font-size: 32px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .product-description {
+
+            font-size: 17px;
+
+            line-height: 1.7;
+
+            color: #555;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .product-price {
+
+            font-size: 28px;
+
+            font-weight: bold;
+
+            margin: 20px 0;
+
+        }
+
+
+        /* ================================
+           FEATURES
+        ================================ */
+
+        .features {
+
+            list-style: none;
+
+            padding: 0;
+
+        }
+
+
+        .features li {
+
+            margin-bottom: 12px;
+
+            font-size: 16px;
+
+        }
+
+
+        .features li i {
+
+            margin-right: 10px;
+
+        }
+
+
+        /* ================================
+           QUANTITY
+        ================================ */
+
+        .quantity-box {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 15px;
+
+            margin: 25px 0;
+
+        }
+
+
+        .quantity-box button {
+
+            width: 40px;
+
+            height: 40px;
+
+            border: 1px solid #ccc;
+
+            background: white;
+
+            font-size: 20px;
+
+            cursor: pointer;
+
+            border-radius: 6px;
+
+        }
+
+
+        .quantity-box button:hover {
+
+            background: #f0f0f0;
+
+        }
+
+
+        .quantity-box span {
+
+            min-width: 30px;
+
+            text-align: center;
+
+            font-size: 18px;
+
+            font-weight: bold;
+
+        }
+
+
+        /* ================================
+           ADD TO CART
+        ================================ */
+
+        .add-to-cart-button {
+
+            width: 100%;
+
+            padding: 16px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #111;
+
+            color: white;
+
+            font-size: 17px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+            transition: 0.3s;
+
+        }
+
+
+        .add-to-cart-button:hover {
+
+            background: #333;
+
+        }
+
+
+        /* ================================
+           CART MESSAGE
+        ================================ */
+
+        .cart-message {
+
+            display: none;
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            border-radius: 8px;
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+
+            font-weight: bold;
+
+            text-align: center;
+
+        }
+
+
+        /* ================================
+           PRODUCT NAVIGATION
+        ================================ */
+
+        .product-navigation {
+
+            max-width: 1100px;
+
+            margin: 25px auto 50px;
+
+            padding: 0 20px;
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 20px;
+
+        }
+
+
+        .nav-product-button {
+
+            display: inline-block;
+
+            padding: 14px 25px;
+
+            background: #111;
+
+            color: white;
+
+            text-decoration: none;
+
+            border-radius: 8px;
+
+            font-weight: bold;
+
+            text-align: center;
+
+            transition: 0.3s;
+
+        }
+
+
+        .nav-product-button:hover {
+
+            background: #333;
+
+            transform: translateY(-2px);
+
+        }
+
+
+        /* ================================
+           MOBILE
+        ================================ */
+
+        @media (max-width: 768px) {
+
+            .product-container {
+
+                grid-template-columns: 1fr;
+
+                padding: 20px;
+
+            }
+
+
+            .product-details h1 {
+
+                font-size: 26px;
+
+            }
+
+
+            .product-image-container {
+
+                min-height: 300px;
+
+            }
+
+
+            .product-navigation {
+
+                flex-direction: column;
+
+            }
+
+
+            .nav-product-button {
+
+                width: 100%;
+
+                box-sizing: border-box;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- ================================
+     HEADER
+================================ -->
+
+<header>
+
+    <div class="logo">
+
+        <h2>
+            FAITH'S GADGETS
+        </h2>
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+
+        <a href="ringlights.html">
+            Products
+        </a>
+
+
+        <a href="cart.html">
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            Cart
+
+            <span id="cart-count">0</span>
+
+        </a>
+
+
+        <a href="checkout.html">
+            Checkout
+        </a>
+
+
+    </nav>
+
+</header>
+
+
+
+<!-- ================================
+     PRODUCT
+================================ -->
+
+<main class="product-page">
+
+    <div class="product-container">
+
+
+        <!-- =========================
+             IMAGE
+        ========================= -->
+
+        <div class="product-image-container">
+
+            <img
+                src="images/f11-gimbal.jpg"
+                alt="F11 3 Axis Foldable Gimbal"
+            >
+
+        </div>
+
+
+
+        <!-- =========================
+             DETAILS
+        ========================= -->
+
+        <div class="product-details">
+
+
+            <h1>
+                F11 3 Axis Foldable Gimbal
+            </h1>
+
+
+            <p class="product-description">
+
+                Capture smoother and more stable
+                videos with the F11 3 Axis Foldable
+                Gimbal.
+
+                Its compact foldable design makes it
+                convenient to carry and use for
+                content creation, photography and
+                video recording.
+
+            </p>
+
+
+
+            <!-- PRICE -->
+
+            <div
+                class="product-price"
+                id="product-price"
+                data-price="35000"
+            >
+
+                ₦35,000
+
+            </div>
+
+
+
+            <!-- FEATURES -->
+
+            <h2>
+                Features
+            </h2>
+
+
+            <ul class="features">
+
+                <li>
+
+                    <i class="fa-solid fa-check"></i>
+
+                    3-axis stabilization
+
+                </li>
+
+
+                <li>
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Foldable and portable design
+
+                </li>
+
+
+                <li>
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Smartphone support
+
+                </li>
+
+
+                <li>
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Smooth video recording
+
+                </li>
+
+
+                <li>
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Suitable for content creation
+
+                </li>
+
+
+                <li>
+
+                    <i class="fa-solid fa-check"></i>
+
+                    Easy to carry
+
+                </li>
+
+            </ul>
+
+
+
+            <!-- =========================
+                 QUANTITY
+            ========================= -->
+
+            <div class="quantity-box">
+
+
+                <button
+                    type="button"
+                    id="minus"
+                >
+
+                    −
+
+                </button>
+
+
+                <span id="quantity">
+
+                    1
+
+                </span>
+
+
+                <button
+                    type="button"
+                    id="plus"
+                >
+
+                    +
+
+                </button>
+
+
+            </div>
+
+
+
+            <!-- =========================
+                 ADD TO CART
+            ========================= -->
+
+            <button
+                type="button"
+                class="add-to-cart-button"
+                id="addToCart"
+            >
+
+                <i class="fa-solid fa-cart-plus"></i>
+
+                Add to Cart
+
+            </button>
+
+
+
+            <!-- CART MESSAGE -->
+
+            <div
+                class="cart-message"
+                id="cartMessage"
+            >
+
+                ✓ F11 Gimbal added to cart!
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</main>
+
+
+
+<!-- ================================
+     BACK / CART / NEXT
+================================ -->
+
+<div class="product-navigation">
+
+
+    <!-- BACK TO CAMERA STANDS -->
+
+    <a
+        href="camera-stands.html"
+        class="nav-product-button"
+    >
+
+        <i class="fa-solid fa-arrow-left"></i>
+
+        Back to Camera Stands
+
+    </a>
+
+
+
+    <!-- VIEW CART -->
+
+    <a
+        href="cart.html"
+        class="nav-product-button"
+    >
+
+        View Cart
+
+        <i class="fa-solid fa-cart-shopping"></i>
+
+    </a>
+
+
+
+    <!-- NEXT TO RINGLIGHTS -->
+
+    <a
+        href="ringlights.html"
+        class="nav-product-button"
+    >
+
+        Next: Ringlights
+
+        <i class="fa-solid fa-arrow-right"></i>
+
+    </a>
+
+
+</div>
+
+
+
+<!-- ================================
+     FOOTER
+================================ -->
+
+<footer>
+
+    <h2>
+        FAITH'S GADGETS
+    </h2>
+
+
+    <p>
+        Quality gadgets and accessories.
+    </p>
+
+
+    <p>
+        © 2026 FAITH'S GADGETS.
+        All Rights Reserved.
+    </p>
+
+</footer>
+
+
+
+<!-- ================================
+     JAVASCRIPT
+================================ -->
+
+<script>
+
+
+/* =================================
+   GET CART
+================================= */
+
+let cart =
+    JSON.parse(localStorage.getItem("cart")) || [];
+
+
+
+/* =================================
+   PRODUCT INFORMATION
+================================= */
+
+const productName =
+    "F11 3 Axis Foldable Gimbal";
+
+
+const productPrice =
+    Number(
+        document
+        .getElementById("product-price")
+        .dataset.price
+    );
+
+
+
+/* =================================
+   QUANTITY
+================================= */
+
+let quantity = 1;
+
+
+const quantityDisplay =
+    document.getElementById("quantity");
+
+
+
+/* PLUS */
+
+document
+    .getElementById("plus")
+    .addEventListener("click", function () {
+
+        quantity++;
+
+        quantityDisplay.textContent =
+            quantity;
+
+    });
+
+
+
+/* MINUS */
+
+document
+    .getElementById("minus")
+    .addEventListener("click", function () {
+
+        if (quantity > 1) {
+
+            quantity--;
+
+        }
+
+        quantityDisplay.textContent =
+            quantity;
+
+    });
+
+
+
+/* =================================
+   ADD TO CART
+================================= */
+
+document
+    .getElementById("addToCart")
+    .addEventListener("click", function () {
+
+
+        /* CHECK IF PRODUCT EXISTS */
+
+        const existingProduct =
+            cart.find(function (item) {
+
+                return item.name === productName;
+
+            });
+
+
+
+        /* IF IT EXISTS */
+
+        if (existingProduct) {
+
+            existingProduct.quantity += quantity;
+
+        }
+
+
+        /* IF IT DOES NOT EXIST */
+
+        else {
+
+            cart.push({
+
+                name: productName,
+
+                price: productPrice,
+
+                quantity: quantity
+
+            });
+
+        }
+
+
+
+        /* SAVE CART */
+
+        localStorage.setItem(
+            "cart",
+            JSON.stringify(cart)
+        );
+
+
+
+        /* UPDATE CART COUNT */
+
+        updateCartCount();
+
+
+
+        /* SHOW MESSAGE */
+
+        const message =
+            document.getElementById("cartMessage");
+
+
+        message.style.display =
+            "block";
+
+
+
+        /* HIDE MESSAGE */
+
+        setTimeout(function () {
+
+            message.style.display =
+                "none";
+
+        }, 2500);
+
+    });
+
+
+
+/* =================================
+   UPDATE CART COUNT
+================================= */
+
+function updateCartCount() {
+
+    let total = 0;
+
+
+    cart.forEach(function (item) {
+
+        total +=
+            Number(item.quantity) || 1;
+
+    });
+
+
+    const cartCount =
+        document.getElementById("cart-count");
+
+
+    if (cartCount) {
+
+        cartCount.textContent =
+            total;
+
+    }
+
+}
+
+
+
+/* =================================
+   INITIAL CART COUNT
+================================= */
+
+updateCartCount();
+
+
+</script>
+
+
+</body>
+
+</html>

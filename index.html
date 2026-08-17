@@ -1,0 +1,352 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>FAITH'S GADGETS</title>
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+    <!-- FONT AWESOME -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+</head>
+
+
+<body>
+
+
+<!-- =========================================
+     HEADER
+========================================= -->
+
+<header>
+
+    <div class="logo">
+
+        <h2>
+            FAITH'S GADGETS
+        </h2>
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+
+        <a href="ringlights.html">
+            Products
+        </a>
+
+
+        <a href="cart.html">
+
+            <i class="fa-solid fa-cart-shopping"></i>
+
+            Cart
+
+            <span id="cart-count">
+                0
+            </span>
+
+        </a>
+
+
+        <a href="checkout.html">
+            Checkout
+        </a>
+
+
+        <a href="track-order.html">
+            Track Order
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================================
+     HERO
+========================================= -->
+
+<section class="hero">
+
+
+    <div class="hero-text">
+
+        <h1>
+            FAITH'S GADGETS
+        </h1>
+
+
+        <h2>
+            Quality Gadgets For Your Setup
+        </h2>
+
+
+        <p>
+
+            Discover ring lights, LED lights,
+            camera tripods, wireless microphones,
+            camera stands, gimbals, Bediro lights,
+            strip lights and selfie sticks.
+
+            Everything you need for
+            content creation, photography
+            and video production.
+
+        </p>
+
+
+        <a
+            href="ringlights.html"
+            class="shop-btn"
+        >
+
+            Shop Now
+
+        </a>
+
+    </div>
+
+
+
+    <div class="logo.jpeg">
+
+        <imglogo.png
+            src="logo.jpeg"
+            alt="FAITH'S GADGETS"
+        >
+
+    </div>
+
+
+</section>
+
+
+
+<!-- =========================================
+     SHOP BY CATEGORY
+========================================= -->
+
+<section class="categories">
+
+    <h2>
+        Shop By Category
+    </h2>
+
+
+    <div class="category-container">
+
+
+        <a href="ringlights.html">
+            Ring Lights
+        </a>
+
+
+        <a href="led-lights.html">
+            LED Lights
+        </a>
+
+
+        <a href="tripods.html">
+            Camera Tripods
+        </a>
+
+
+        <a href="microphones.html">
+            Wireless Microphones
+        </a>
+
+
+        <a href="camera-stands.html">
+            Camera Stands
+        </a>
+
+
+        <a href="gimbal.html">
+            Gimbals
+        </a>
+
+
+        <a href="bediro-light.html">
+            Bediro Lights
+        </a>
+
+
+        <a href="strip-light.html">
+            Strip Lights
+        </a>
+
+
+        <a href="selfie-stick.html">
+            Selfie Sticks
+        </a>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     WHY CHOOSE US
+========================================= -->
+
+<section class="why-us">
+
+    <h2>
+        Why Choose FAITH'S GADGETS?
+    </h2>
+
+
+    <div class="features">
+
+
+        <div class="feature">
+
+            <i class="fa-solid fa-star"></i>
+
+            <h3>
+                Quality Products
+            </h3>
+
+            <p>
+                We provide quality gadgets
+                for your setup.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature">
+
+            <i class="fa-solid fa-truck"></i>
+
+            <h3>
+                Reliable Delivery
+            </h3>
+
+            <p>
+                Get your orders delivered
+                conveniently.
+            </p>
+
+        </div>
+
+
+
+        <div class="feature">
+
+            <i class="fa-solid fa-headset"></i>
+
+            <h3>
+                Customer Support
+            </h3>
+
+            <p>
+                We're here to help with
+                your gadget needs.
+            </p>
+
+        </div>
+
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================
+     FOOTER
+========================================= -->
+
+<footer>
+
+    <h2>
+        FAITH'S GADGETS
+    </h2>
+
+
+    <p>
+        Quality gadgets and accessories.
+    </p>
+
+
+    <p>
+        © 2026 FAITH'S GADGETS.
+        All Rights Reserved.
+    </p>
+
+</footer>
+
+
+
+<!-- =========================================
+     JAVASCRIPT
+========================================= -->
+
+<script>
+
+/* =========================================
+   CART COUNT ONLY
+========================================= */
+
+const cart =
+    JSON.parse(
+        localStorage.getItem("cart")
+    ) || [];
+
+
+let cartCount = 0;
+
+
+cart.forEach(function (item) {
+
+    cartCount +=
+        Number(item.quantity) || 1;
+
+});
+
+
+const cartCountElement =
+    document.getElementById(
+        "cart-count"
+    );
+
+
+if (cartCountElement) {
+
+    cartCountElement.textContent =
+        cartCount;
+
+}
+
+</script>
+
+
+</body>
+
+</html>

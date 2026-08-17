@@ -1,0 +1,1959 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Admin | FAITH'S GADGETS</title>
+
+
+    <!-- MAIN WEBSITE CSS -->
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <!-- ADMIN CSS -->
+    <link
+        rel="stylesheet"
+        href="admin.css"
+    >
+
+
+    <!-- FONT AWESOME -->
+    <link
+        rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    >
+
+
+    <!-- SUPABASE -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <style>
+
+        /* =========================
+           ADMIN PAGE
+        ========================= */
+
+        .admin-page {
+
+            max-width: 1200px;
+
+            margin: 40px auto;
+
+            padding: 20px;
+
+        }
+
+
+        .admin-subtitle {
+
+            color: #666;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        /* =========================
+           STATISTICS
+        ========================= */
+
+        .order-stats {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(3, 1fr);
+
+            gap: 20px;
+
+            margin-bottom: 35px;
+
+        }
+
+
+        .stat-card {
+
+            background: white;
+
+            padding: 30px;
+
+            border-radius: 12px;
+
+            text-align: center;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,0.08);
+
+        }
+
+
+        .stat-card i {
+
+            font-size: 25px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .stat-card h2 {
+
+            font-size: 30px;
+
+            margin: 10px 0;
+
+        }
+
+
+        .stat-card p {
+
+            color: #666;
+
+        }
+
+
+        /* =========================
+           SEARCH
+        ========================= */
+
+        .order-tools {
+
+            display: flex;
+
+            gap: 10px;
+
+            margin-bottom: 25px;
+
+        }
+
+
+        .order-search {
+
+            flex: 1;
+
+            padding: 14px;
+
+            border: 1px solid #ddd;
+
+            border-radius: 8px;
+
+            font-size: 16px;
+
+        }
+
+
+        /* =========================
+           ORDER CARD
+        ========================= */
+
+        .order {
+
+            background: white;
+
+            padding: 25px;
+
+            margin-bottom: 20px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,0.08);
+
+        }
+
+
+        .order-header {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            border-bottom:
+                1px solid #eee;
+
+            padding-bottom: 15px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .order-header h2 {
+
+            margin: 0;
+
+        }
+
+
+        .order-date {
+
+            color: #666;
+
+        }
+
+
+        .order-information {
+
+            display: grid;
+
+            grid-template-columns:
+                repeat(2, 1fr);
+
+            gap: 10px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .order-information p {
+
+            margin: 5px 0;
+
+            line-height: 1.5;
+
+        }
+
+
+        .order-total {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            align-items: center;
+
+            padding: 15px;
+
+            background: #f5f5f5;
+
+            border-radius: 8px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .order-total strong {
+
+            font-size: 22px;
+
+        }
+
+
+        /* =========================
+           ITEMS
+        ========================= */
+
+        .items-box {
+
+            background: #fafafa;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .items-box h3 {
+
+            margin-top: 0;
+
+        }
+
+
+        .item-row {
+
+            display: flex;
+
+            justify-content:
+                space-between;
+
+            gap: 15px;
+
+            padding: 10px 0;
+
+            border-bottom:
+                1px solid #eee;
+
+        }
+
+
+        .item-row:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .price-not-set {
+
+            color: #777;
+
+            font-style: italic;
+
+        }
+
+
+        /* =========================
+           STATUS
+        ========================= */
+
+        .order-actions {
+
+            display: flex;
+
+            align-items: center;
+
+            gap: 12px;
+
+            border-top:
+                1px solid #eee;
+
+            padding-top: 20px;
+
+        }
+
+
+        .order-actions select {
+
+            padding: 10px;
+
+            border:
+                1px solid #ccc;
+
+            border-radius: 6px;
+
+        }
+
+
+        .delete-order {
+
+            padding: 10px 15px;
+
+            border: none;
+
+            background: #d11;
+
+            color: white;
+
+            border-radius: 6px;
+
+            cursor: pointer;
+
+        }
+
+
+        .delete-order:hover {
+
+            background: #a00;
+
+        }
+
+
+        /* =========================
+           STATUS BADGE
+        ========================= */
+
+        .status-badge {
+
+            display: inline-block;
+
+            padding: 6px 12px;
+
+            border-radius: 20px;
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+
+            font-weight: bold;
+
+            font-size: 13px;
+
+        }
+
+
+        /* =========================
+           EMPTY
+        ========================= */
+
+        .empty {
+
+            background: white;
+
+            padding: 60px 20px;
+
+            text-align: center;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,0.08);
+
+        }
+
+
+        .empty i {
+
+            font-size: 50px;
+
+            margin-bottom: 15px;
+
+            color: #777;
+
+        }
+
+
+        .empty p {
+
+            color: #777;
+
+        }
+
+
+        /* =========================
+           LOADING
+        ========================= */
+
+        .loading {
+
+            background: white;
+
+            padding: 40px;
+
+            text-align: center;
+
+            border-radius: 12px;
+
+        }
+
+
+        .error-message {
+
+            background: #ffe5e5;
+
+            color: #b00000;
+
+            padding: 20px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .success-message {
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+
+            padding: 15px;
+
+            border-radius: 8px;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        /* =========================
+           RESPONSIVE
+        ========================= */
+
+        @media (max-width: 700px) {
+
+            .order-stats {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .order-information {
+
+                grid-template-columns: 1fr;
+
+            }
+
+
+            .order-header {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 10px;
+
+            }
+
+
+            .order-actions {
+
+                flex-wrap: wrap;
+
+            }
+
+
+            .item-row {
+
+                flex-direction: column;
+
+                gap: 5px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =================================
+     ADMIN HEADER
+================================= -->
+
+<header class="admin-header">
+
+    <div>
+
+        <h1>
+            FAITH'S GADGETS
+        </h1>
+
+        <p>
+            Admin Dashboard
+        </p>
+
+    </div>
+
+
+    <div>
+
+        <a
+            href="index.html"
+            class="admin-store-button"
+        >
+
+            <i class="fa-solid fa-house"></i>
+
+            Back to Store
+
+        </a>
+
+
+        <button
+            onclick="logout()"
+            class="admin-logout"
+        >
+
+            <i class="fa-solid fa-right-from-bracket"></i>
+
+            Logout
+
+        </button>
+
+    </div>
+
+</header>
+
+
+
+<!-- =================================
+     MAIN ADMIN PAGE
+================================= -->
+
+<main class="admin-page">
+
+
+    <h1>
+        Admin Orders
+    </h1>
+
+
+    <p class="admin-subtitle">
+        Manage and track customer orders.
+    </p>
+
+
+
+    <!-- =================================
+         STATISTICS
+    ================================= -->
+
+    <div class="order-stats">
+
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-box"></i>
+
+            <h2 id="total-orders">
+                0
+            </h2>
+
+            <p>
+                Total Orders
+            </p>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-clock"></i>
+
+            <h2 id="pending-orders">
+                0
+            </h2>
+
+            <p>
+                Pending Orders
+            </p>
+
+        </div>
+
+
+
+        <div class="stat-card">
+
+            <i class="fa-solid fa-naira-sign"></i>
+
+            <h2 id="total-sales">
+                ₦0
+            </h2>
+
+            <p>
+                Total Sales
+            </p>
+
+        </div>
+
+    </div>
+
+
+
+    <!-- =================================
+         SEARCH
+    ================================= -->
+
+    <div class="order-tools">
+
+        <input
+            type="text"
+            id="order-search"
+            class="order-search"
+            placeholder="Search order number, customer, phone or email..."
+        >
+
+    </div>
+
+
+
+    <!-- =================================
+         ORDERS
+    ================================= -->
+
+    <div
+        id="orders"
+        class="orders"
+    >
+
+        <div class="loading">
+
+            <i class="fa-solid fa-spinner fa-spin"></i>
+
+            Loading orders...
+
+        </div>
+
+    </div>
+
+
+</main>
+
+
+
+<script>
+
+
+// ==========================================
+// SUPABASE CONNECTION
+// ==========================================
+
+const SUPABASE_URL =
+    "https://xlndevzrexpshpkruwho.supabase.co";
+
+
+const SUPABASE_KEY =
+    "sb_publishable_K3goJriHOTqkoFXEb839Zw_3ozu3V6F";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+
+// ==========================================
+// ELEMENTS
+// ==========================================
+
+const ordersBox =
+    document.getElementById(
+        "orders"
+    );
+
+
+const totalOrdersElement =
+    document.getElementById(
+        "total-orders"
+    );
+
+
+const pendingOrdersElement =
+    document.getElementById(
+        "pending-orders"
+    );
+
+
+const totalSalesElement =
+    document.getElementById(
+        "total-sales"
+    );
+
+
+const searchInput =
+    document.getElementById(
+        "order-search"
+    );
+
+
+
+// ==========================================
+// ORDERS
+// ==========================================
+
+let orders = [];
+
+
+
+// ==========================================
+// CHECK ADMIN LOGIN
+// ==========================================
+
+async function checkAdminLogin() {
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient.auth.getSession();
+
+
+    if (error) {
+
+        console.error(
+            "Session error:",
+            error
+        );
+
+        return false;
+
+    }
+
+
+    if (!data.session) {
+
+        window.location.href =
+            "admin-login.html";
+
+        return false;
+
+    }
+
+
+    return true;
+
+}
+
+
+
+// ==========================================
+// LOAD ORDERS
+// ==========================================
+
+async function loadOrders() {
+
+    ordersBox.innerHTML = `
+
+        <div class="loading">
+
+            <i class="fa-solid fa-spinner fa-spin"></i>
+
+            Loading orders...
+
+        </div>
+
+    `;
+
+
+    const {
+        data,
+        error
+    } =
+        await supabaseClient
+
+            .from("orders")
+
+            .select("*")
+
+            .order(
+                "created_at",
+                {
+                    ascending: false
+                }
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Supabase error:",
+            error
+        );
+
+
+        ordersBox.innerHTML = `
+
+            <div class="error-message">
+
+                <h3>
+                    Unable to load orders
+                </h3>
+
+                <p>
+
+                    ${escapeHtml(
+                        error.message
+                    )}
+
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    orders =
+        data || [];
+
+
+    displayOrders();
+
+    updateStatistics();
+
+}
+
+
+
+// ==========================================
+// DISPLAY ORDERS
+// ==========================================
+
+function displayOrders() {
+
+
+    const search =
+        searchInput.value
+            .trim()
+            .toLowerCase();
+
+
+    const filteredOrders =
+        orders.filter(
+            function (order) {
+
+                const orderNumber =
+                    String(
+                        order.order_number ||
+                        ""
+                    ).toLowerCase();
+
+
+                const customerName =
+                    String(
+                        order.customer_name ||
+                        ""
+                    ).toLowerCase();
+
+
+                const phone =
+                    String(
+                        order.customer_phone ||
+                        ""
+                    ).toLowerCase();
+
+
+                const email =
+                    String(
+                        order.customer_email ||
+                        ""
+                    ).toLowerCase();
+
+
+                return (
+
+                    orderNumber.includes(
+                        search
+                    ) ||
+
+                    customerName.includes(
+                        search
+                    ) ||
+
+                    phone.includes(
+                        search
+                    ) ||
+
+                    email.includes(
+                        search
+                    )
+
+                );
+
+            }
+        );
+
+
+
+    // ======================================
+    // NO ORDERS
+    // ======================================
+
+    if (
+        filteredOrders.length === 0
+    ) {
+
+        ordersBox.innerHTML = `
+
+            <div class="empty">
+
+                <i class="fa-solid fa-box-open"></i>
+
+                <h2>
+
+                    ${
+                        search
+                        ? "No matching orders"
+                        : "No Orders Yet"
+                    }
+
+                </h2>
+
+                <p>
+
+                    ${
+                        search
+                        ? "Try another search."
+                        : "Customer orders will appear here."
+                    }
+
+                </p>
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+
+    ordersBox.innerHTML = "";
+
+
+
+    // ======================================
+    // CREATE ORDER CARDS
+    // ======================================
+
+    filteredOrders.forEach(
+        function (order) {
+
+            const total =
+                Number(
+                    order.total
+                ) || 0;
+
+
+            const subtotal =
+                Number(
+                    order.subtotal
+                ) || 0;
+
+
+            const deliveryFee =
+                Number(
+                    order.delivery_fee
+                ) || 0;
+
+
+            const status =
+                order.order_status ||
+                "Pending";
+
+
+            const paymentStatus =
+                order.payment_status ||
+                "Pending";
+
+
+            const createdAt =
+                order.created_at
+
+                    ? new Date(
+                        order.created_at
+                    ).toLocaleString()
+
+                    : "Date unavailable";
+
+
+            const orderNumber =
+                order.order_number ||
+                "N/A";
+
+
+            const customerName =
+                order.customer_name ||
+                "N/A";
+
+
+            const phone =
+                order.customer_phone ||
+                "N/A";
+
+
+            const email =
+                order.customer_email ||
+                "N/A";
+
+
+            const address =
+                order.customer_address ||
+                "N/A";
+
+
+            const state =
+                order.state ||
+                "N/A";
+
+
+            const localGovernment =
+                order.local_government ||
+                "N/A";
+
+
+            const paymentMethod =
+                order.payment_method ||
+                "N/A";
+
+
+            const paymentReference =
+                order.payment_reference ||
+                "N/A";
+
+
+            // =================================
+            // ITEMS
+            // =================================
+
+            let itemsHtml =
+                `
+                <p>
+                    No items available.
+                </p>
+                `;
+
+
+            if (
+                Array.isArray(
+                    order.items
+                ) &&
+                order.items.length > 0
+            ) {
+
+                itemsHtml =
+                    order.items
+                        .map(
+                            function (item) {
+
+                                const name =
+                                    item.name ||
+                                    "Product";
+
+
+                                const quantity =
+                                    Number(
+                                        item.quantity
+                                    ) || 1;
+
+
+                                const price =
+                                    Number(
+                                        item.price
+                                    ) || 0;
+
+
+                                let priceHtml =
+                                    `
+                                    <span class="price-not-set">
+                                        Price not set
+                                    </span>
+                                    `;
+
+
+                                if (
+                                    price > 0
+                                ) {
+
+                                    priceHtml =
+                                        "₦" +
+                                        (
+                                            price *
+                                            quantity
+                                        ).toLocaleString();
+
+                                }
+
+
+                                return `
+
+                                    <div class="item-row">
+
+                                        <span>
+
+                                            ${escapeHtml(
+                                                name
+                                            )}
+
+                                            × ${quantity}
+
+                                        </span>
+
+                                        <strong>
+
+                                            ${priceHtml}
+
+                                        </strong>
+
+                                    </div>
+
+                                `;
+
+                            }
+                        )
+                        .join("");
+
+            }
+
+
+
+            // =================================
+            // ORDER CARD
+            // =================================
+
+            const orderCard =
+                document.createElement(
+                    "div"
+                );
+
+
+            orderCard.className =
+                "order";
+
+
+            orderCard.innerHTML = `
+
+                <div class="order-header">
+
+                    <h2>
+
+                        Order #
+
+                        ${escapeHtml(
+                            orderNumber
+                        )}
+
+                    </h2>
+
+
+                    <span class="order-date">
+
+                        <i class="fa-regular fa-calendar"></i>
+
+                        ${escapeHtml(
+                            createdAt
+                        )}
+
+                    </span>
+
+                </div>
+
+
+
+                <!-- CUSTOMER INFORMATION -->
+
+                <div class="order-information">
+
+
+                    <p>
+
+                        <i class="fa-solid fa-user"></i>
+
+                        <b>
+                            Customer:
+                        </b>
+
+                        ${escapeHtml(
+                            customerName
+                        )}
+
+                    </p>
+
+
+
+                    <p>
+
+                        <i class="fa-solid fa-phone"></i>
+
+                        <b>
+                            Phone:
+                        </b>
+
+                        ${escapeHtml(
+                            phone
+                        )}
+
+                    </p>
+
+
+
+                    <p>
+
+                        <i class="fa-solid fa-envelope"></i>
+
+                        <b>
+                            Email:
+                        </b>
+
+                        ${escapeHtml(
+                            email
+                        )}
+
+                    </p>
+
+
+
+                    <p>
+
+                        <i class="fa-solid fa-location-dot"></i>
+
+                        <b>
+                            Address:
+                        </b>
+
+                        ${escapeHtml(
+                            address
+                        )}
+
+                    </p>
+
+
+
+                    <p>
+
+                        <i class="fa-solid fa-map"></i>
+
+                        <b>
+                            State:
+                        </b>
+
+                        ${escapeHtml(
+                            state
+                        )}
+
+                    </p>
+
+
+
+                    <p>
+
+                        <i class="fa-solid fa-location-crosshairs"></i>
+
+                        <b>
+                            LGA:
+                        </b>
+
+                        ${escapeHtml(
+                            localGovernment
+                        )}
+
+                    </p>
+
+
+
+                    <p>
+
+                        <i class="fa-solid fa-credit-card"></i>
+
+                        <b>
+                            Payment:
+                        </b>
+
+                        ${escapeHtml(
+                            paymentMethod
+                        )}
+
+                    </p>
+
+
+
+                    <p>
+
+                        <i class="fa-solid fa-circle-check"></i>
+
+                        <b>
+                            Payment Status:
+                        </b>
+
+                        ${escapeHtml(
+                            paymentStatus
+                        )}
+
+                    </p>
+
+
+
+                    <p>
+
+                        <i class="fa-solid fa-receipt"></i>
+
+                        <b>
+                            Payment Reference:
+                        </b>
+
+                        ${escapeHtml(
+                            paymentReference
+                        )}
+
+                    </p>
+
+
+                    <p>
+
+                        <i class="fa-solid fa-truck"></i>
+
+                        <b>
+                            Order Status:
+                        </b>
+
+                        <span class="status-badge">
+
+                            ${escapeHtml(
+                                status
+                            )}
+
+                        </span>
+
+                    </p>
+
+
+                </div>
+
+
+
+                <!-- ITEMS -->
+
+                <div class="items-box">
+
+                    <h3>
+                        Ordered Items
+                    </h3>
+
+                    ${itemsHtml}
+
+                </div>
+
+
+
+                <!-- TOTAL -->
+
+                <div class="order-total">
+
+                    <span>
+                        Order Total
+                    </span>
+
+                    <strong>
+
+                        ₦${total.toLocaleString()}
+
+                    </strong>
+
+                </div>
+
+
+
+                <div
+                    style="
+                        display:flex;
+                        justify-content:space-between;
+                        padding:8px 0;
+                    "
+                >
+
+                    <span>
+                        Subtotal
+                    </span>
+
+                    <strong>
+
+                        ₦${subtotal.toLocaleString()}
+
+                    </strong>
+
+                </div>
+
+
+
+                <div
+                    style="
+                        display:flex;
+                        justify-content:space-between;
+                        padding:8px 0;
+                        margin-bottom:20px;
+                    "
+                >
+
+                    <span>
+                        Delivery Fee
+                    </span>
+
+                    <strong>
+
+                        ₦${deliveryFee.toLocaleString()}
+
+                    </strong>
+
+                </div>
+
+
+
+                <!-- ACTIONS -->
+
+                <div class="order-actions">
+
+                    <label>
+
+                        <b>
+                            Order Status:
+                        </b>
+
+                    </label>
+
+
+                    <select
+                        class="status-select"
+                        data-id="${order.id}"
+                    >
+
+                        <option
+                            value="Pending"
+                            ${
+                                status === "Pending"
+                                ? "selected"
+                                : ""
+                            }
+                        >
+                            Pending
+                        </option>
+
+
+                        <option
+                            value="Confirmed"
+                            ${
+                                status === "Confirmed"
+                                ? "selected"
+                                : ""
+                            }
+                        >
+                            Confirmed
+                        </option>
+
+
+                        <option
+                            value="Processing"
+                            ${
+                                status === "Processing"
+                                ? "selected"
+                                : ""
+                            }
+                        >
+                            Processing
+                        </option>
+
+
+                        <option
+                            value="Shipped"
+                            ${
+                                status === "Shipped"
+                                ? "selected"
+                                : ""
+                            }
+                        >
+                            Shipped
+                        </option>
+
+
+                        <option
+                            value="Delivered"
+                            ${
+                                status === "Delivered"
+                                ? "selected"
+                                : ""
+                            }
+                        >
+                            Delivered
+                        </option>
+
+                    </select>
+
+
+                    <button
+                        type="button"
+                        class="delete-order"
+                        data-id="${order.id}"
+                    >
+
+                        <i class="fa-solid fa-trash"></i>
+
+                        Delete
+
+                    </button>
+
+                </div>
+
+            `;
+
+
+            ordersBox.appendChild(
+                orderCard
+            );
+
+        }
+    );
+
+
+
+    // ======================================
+    // STATUS EVENTS
+    // ======================================
+
+    document
+        .querySelectorAll(
+            ".status-select"
+        )
+        .forEach(
+            function (select) {
+
+                select.addEventListener(
+                    "change",
+                    function () {
+
+                        updateOrderStatus(
+                            this.dataset.id,
+                            this.value
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+
+
+    // ======================================
+    // DELETE EVENTS
+    // ======================================
+
+    document
+        .querySelectorAll(
+            ".delete-order"
+        )
+        .forEach(
+            function (button) {
+
+                button.addEventListener(
+                    "click",
+                    function () {
+
+                        deleteOrder(
+                            this.dataset.id
+                        );
+
+                    }
+                );
+
+            }
+        );
+
+}
+
+
+
+// ==========================================
+// UPDATE ORDER STATUS
+// ==========================================
+
+async function updateOrderStatus(
+    id,
+    status
+) {
+
+    const {
+        error
+    } =
+        await supabaseClient
+
+            .from("orders")
+
+            .update({
+
+                order_status:
+                    status
+
+            })
+
+            .eq(
+                "id",
+                id
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Status update error:",
+            error
+        );
+
+
+        alert(
+            "Could not update order status."
+        );
+
+        return;
+
+    }
+
+
+    // Update local copy immediately
+
+    const order =
+        orders.find(
+            function (item) {
+
+                return String(
+                    item.id
+                ) === String(id);
+
+            }
+        );
+
+
+    if (order) {
+
+        order.order_status =
+            status;
+
+    }
+
+
+    updateStatistics();
+
+    displayOrders();
+
+
+    alert(
+        "Order status updated!"
+    );
+
+}
+
+
+
+// ==========================================
+// DELETE ORDER
+// ==========================================
+
+async function deleteOrder(
+    id
+) {
+
+    const confirmDelete =
+        confirm(
+            "Are you sure you want to delete this order?"
+        );
+
+
+    if (!confirmDelete) {
+
+        return;
+
+    }
+
+
+    const {
+        error
+    } =
+        await supabaseClient
+
+            .from("orders")
+
+            .delete()
+
+            .eq(
+                "id",
+                id
+            );
+
+
+    if (error) {
+
+        console.error(
+            "Delete error:",
+            error
+        );
+
+
+        alert(
+            "Could not delete order."
+        );
+
+        return;
+
+    }
+
+
+    orders =
+        orders.filter(
+            function (order) {
+
+                return String(
+                    order.id
+                ) !== String(id);
+
+            }
+        );
+
+
+    displayOrders();
+
+    updateStatistics();
+
+
+    alert(
+        "Order deleted successfully."
+    );
+
+}
+
+
+
+// ==========================================
+// STATISTICS
+// ==========================================
+
+function updateStatistics() {
+
+    totalOrdersElement.textContent =
+        orders.length;
+
+
+
+    const pending =
+        orders.filter(
+            function (order) {
+
+                return (
+                    !order.order_status ||
+                    order.order_status ===
+                        "Pending"
+                );
+
+            }
+        ).length;
+
+
+    pendingOrdersElement.textContent =
+        pending;
+
+
+
+    let sales = 0;
+
+
+    orders.forEach(
+        function (order) {
+
+            sales +=
+                Number(
+                    order.total
+                ) || 0;
+
+        }
+    );
+
+
+    totalSalesElement.textContent =
+        "₦" +
+        sales.toLocaleString();
+
+}
+
+
+
+// ==========================================
+// SEARCH
+// ==========================================
+
+searchInput.addEventListener(
+    "input",
+    function () {
+
+        displayOrders();
+
+    }
+);
+
+
+
+// ==========================================
+// LOGOUT
+// ==========================================
+
+async function logout() {
+
+    await supabaseClient.auth.signOut();
+
+    window.location.href =
+        "admin-login.html";
+
+}
+
+
+
+// ==========================================
+// SECURITY
+// ==========================================
+
+function escapeHtml(value) {
+
+    return String(value || "")
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+// ==========================================
+// START
+// ==========================================
+
+async function startAdmin() {
+
+    const loggedIn =
+        await checkAdminLogin();
+
+
+    if (!loggedIn) {
+
+        return;
+
+    }
+
+
+    await loadOrders();
+
+}
+
+
+startAdmin();
+
+</script>
+
+
+</body>
+
+</html>

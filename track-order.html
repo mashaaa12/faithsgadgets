@@ -1,0 +1,1188 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>Track Order | FAITH'S GADGETS</title>
+
+
+    <link
+        rel="stylesheet"
+        href="style.css"
+    >
+
+
+    <!-- SUPABASE -->
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+
+    <style>
+
+        .tracking-container {
+
+            max-width: 700px;
+
+            margin: 50px auto;
+
+            padding: 25px;
+
+        }
+
+
+        .tracking-container h1 {
+
+            text-align: center;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .tracking-subtitle {
+
+            text-align: center;
+
+            color: #666;
+
+            margin-bottom: 30px;
+
+        }
+
+
+        .tracking-box {
+
+            background: #fff;
+
+            padding: 25px;
+
+            border-radius: 12px;
+
+            box-shadow:
+                0 5px 20px
+                rgba(0,0,0,0.08);
+
+        }
+
+
+        .tracking-box label {
+
+            display: block;
+
+            margin-bottom: 8px;
+
+            font-weight: bold;
+
+        }
+
+
+        .tracking-box input {
+
+            width: 100%;
+
+            padding: 14px;
+
+            margin-bottom: 15px;
+
+            border: 1px solid #ccc;
+
+            border-radius: 8px;
+
+            box-sizing: border-box;
+
+            font-size: 15px;
+
+        }
+
+
+        .track-button {
+
+            width: 100%;
+
+            padding: 14px;
+
+            border: none;
+
+            border-radius: 8px;
+
+            background: #111;
+
+            color: white;
+
+            font-size: 16px;
+
+            font-weight: bold;
+
+            cursor: pointer;
+
+        }
+
+
+        .track-button:hover {
+
+            background: #333;
+
+        }
+
+
+        .track-button:disabled {
+
+            opacity: 0.6;
+
+            cursor: not-allowed;
+
+        }
+
+
+        #tracking-result {
+
+            margin-top: 25px;
+
+        }
+
+
+        .order-card {
+
+            background: #f7f7f7;
+
+            padding: 20px;
+
+            border-radius: 10px;
+
+        }
+
+
+        .order-card h2 {
+
+            margin-top: 0;
+
+            margin-bottom: 20px;
+
+        }
+
+
+        .order-row {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            align-items: center;
+
+            gap: 15px;
+
+            padding: 12px 0;
+
+            border-bottom:
+                1px solid #ddd;
+
+        }
+
+
+        .order-row:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        .status {
+
+            display: inline-block;
+
+            padding: 8px 14px;
+
+            border-radius: 20px;
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+
+            font-weight: bold;
+
+        }
+
+
+        .items-title {
+
+            margin-top: 25px;
+
+            margin-bottom: 10px;
+
+        }
+
+
+        .not-found {
+
+            padding: 15px;
+
+            background: #fff3f3;
+
+            color: #c62828;
+
+            border-radius: 8px;
+
+        }
+
+
+        .success-message {
+
+            padding: 15px;
+
+            background: #e8f5e9;
+
+            color: #2e7d32;
+
+            border-radius: 8px;
+
+            margin-bottom: 15px;
+
+        }
+
+
+        .tracking-note {
+
+            margin-top: 15px;
+
+            padding: 12px;
+
+            background: #f5f5f5;
+
+            border-radius: 8px;
+
+            font-size: 13px;
+
+            color: #666;
+
+        }
+
+
+        .item-line {
+
+            display: flex;
+
+            justify-content: space-between;
+
+            gap: 15px;
+
+            padding: 10px 0;
+
+            border-bottom:
+                1px solid #eee;
+
+        }
+
+
+        .item-line:last-child {
+
+            border-bottom: none;
+
+        }
+
+
+        @media (max-width: 600px) {
+
+            .tracking-container {
+
+                margin: 30px auto;
+
+                padding: 15px;
+
+            }
+
+
+            .tracking-box {
+
+                padding: 20px;
+
+            }
+
+
+            .order-row {
+
+                flex-direction: column;
+
+                align-items: flex-start;
+
+                gap: 5px;
+
+            }
+
+
+            .item-line {
+
+                flex-direction: column;
+
+                gap: 5px;
+
+            }
+
+        }
+
+    </style>
+
+</head>
+
+
+<body>
+
+
+<!-- =========================
+     HEADER
+========================= -->
+
+<header>
+
+    <div class="logo">
+
+        <h2>
+            FAITH'S GADGETS
+        </h2>
+
+    </div>
+
+
+    <nav>
+
+        <a href="index.html">
+            Home
+        </a>
+
+
+        <a href="ringlights.html">
+            Products
+        </a>
+
+
+        <a href="cart.html">
+            Cart
+        </a>
+
+
+        <a href="checkout.html">
+            Checkout
+        </a>
+
+
+        <a href="track-order.html">
+            Track Order
+        </a>
+
+    </nav>
+
+</header>
+
+
+
+<!-- =========================
+     TRACK ORDER
+========================= -->
+
+<div class="tracking-container">
+
+
+    <h1>
+        Track Your Order
+    </h1>
+
+
+    <p class="tracking-subtitle">
+
+        Enter your order number to check
+        your order status.
+
+    </p>
+
+
+
+    <div class="tracking-box">
+
+
+        <label for="order-number">
+
+            Order Number
+
+        </label>
+
+
+        <input
+            type="text"
+            id="order-number"
+            placeholder="Example: FG1750000000000"
+            autocomplete="off"
+        >
+
+
+        <button
+            type="button"
+            class="track-button"
+            id="track-button"
+        >
+
+            Track Order
+
+        </button>
+
+
+        <div id="tracking-result"></div>
+
+
+    </div>
+
+
+</div>
+
+
+
+<script>
+
+
+// =========================================
+// SUPABASE
+// =========================================
+
+const SUPABASE_URL =
+    "https://xlndevzrexpshpkruwho.supabase.co";
+
+
+const SUPABASE_KEY =
+    "sb_publishable_K3goJriHOTqkoFXEb839Zw_3ozu3V6F";
+
+
+const supabaseClient =
+    window.supabase.createClient(
+        SUPABASE_URL,
+        SUPABASE_KEY
+    );
+
+
+
+// =========================================
+// ELEMENTS
+// =========================================
+
+const orderNumberInput =
+    document.getElementById(
+        "order-number"
+    );
+
+
+const trackButton =
+    document.getElementById(
+        "track-button"
+    );
+
+
+const trackingResult =
+    document.getElementById(
+        "tracking-result"
+    );
+
+
+
+// =========================================
+// ESCAPE HTML
+// =========================================
+
+function escapeHtml(value) {
+
+    return String(value || "")
+
+        .replace(
+            /&/g,
+            "&amp;"
+        )
+
+        .replace(
+            /</g,
+            "&lt;"
+        )
+
+        .replace(
+            />/g,
+            "&gt;"
+        )
+
+        .replace(
+            /"/g,
+            "&quot;"
+        )
+
+        .replace(
+            /'/g,
+            "&#039;"
+        );
+
+}
+
+
+
+// =========================================
+// TRACK ORDER
+// =========================================
+
+async function trackOrder() {
+
+
+    const orderNumber =
+        orderNumberInput.value
+            .trim()
+            .toUpperCase();
+
+
+    // =====================================
+    // CHECK INPUT
+    // =====================================
+
+    if (!orderNumber) {
+
+        trackingResult.innerHTML = `
+
+            <div class="not-found">
+
+                Please enter your order number.
+
+            </div>
+
+        `;
+
+        return;
+
+    }
+
+
+    // =====================================
+    // LOADING
+    // =====================================
+
+    trackButton.disabled = true;
+
+    trackButton.textContent =
+        "Checking Order...";
+
+
+    trackingResult.innerHTML = `
+
+        <div class="tracking-note">
+
+            Checking your order...
+
+        </div>
+
+    `;
+
+
+    try {
+
+
+        // =================================
+        // SEARCH SUPABASE
+        // =================================
+
+        const {
+            data,
+            error
+        } =
+            await supabaseClient.rpc(
+                "track_order",
+                {
+                    search_order_number:
+                        orderNumber
+                }
+            );
+
+
+        console.log(
+            "Tracking response:",
+            data
+        );
+
+
+        if (error) {
+
+            console.error(
+                "Tracking error:",
+                error
+            );
+
+
+            trackingResult.innerHTML = `
+
+                <div class="not-found">
+
+                    <strong>
+                        We could not check this order.
+                    </strong>
+
+                    <br><br>
+
+                    Please make sure the order
+                    number is correct.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        // =================================
+        // ORDER NOT FOUND
+        // =================================
+
+        if (!data) {
+
+            trackingResult.innerHTML = `
+
+                <div class="not-found">
+
+                    <strong>
+                        Order not found.
+                    </strong>
+
+                    <br><br>
+
+                    Please check your order
+                    number and try again.
+
+                </div>
+
+            `;
+
+            return;
+
+        }
+
+
+        // =================================
+        // DISPLAY ORDER
+        // =================================
+
+        displayOrder(data);
+
+
+    }
+
+    catch (error) {
+
+        console.error(
+            "Unexpected tracking error:",
+            error
+        );
+
+
+        trackingResult.innerHTML = `
+
+            <div class="not-found">
+
+                Something went wrong while
+                checking your order.
+
+            </div>
+
+        `;
+
+    }
+
+
+    finally {
+
+        trackButton.disabled = false;
+
+        trackButton.textContent =
+            "Track Order";
+
+    }
+
+}
+
+
+
+// =========================================
+// DISPLAY ORDER
+// =========================================
+
+function displayOrder(order) {
+
+
+    const items =
+        Array.isArray(order.items)
+            ? order.items
+            : [];
+
+
+    // =====================================
+    // ITEMS
+    // =====================================
+
+    let itemsHTML = "";
+
+
+    if (items.length > 0) {
+
+
+        items.forEach(function(item) {
+
+
+            const price =
+                Number(item.price) || 0;
+
+
+            const quantity =
+                Number(item.quantity) || 1;
+
+
+            const itemTotal =
+                price * quantity;
+
+
+            let priceHTML =
+                "Price not set";
+
+
+            if (price > 0) {
+
+                priceHTML =
+                    "₦" +
+                    itemTotal.toLocaleString();
+
+            }
+
+
+            itemsHTML += `
+
+                <div class="item-line">
+
+                    <span>
+
+                        ${escapeHtml(
+                            item.name ||
+                            "Product"
+                        )}
+
+                        × ${quantity}
+
+                    </span>
+
+
+                    <strong>
+
+                        ${priceHTML}
+
+                    </strong>
+
+                </div>
+
+            `;
+
+        });
+
+
+    } else {
+
+
+        itemsHTML = `
+
+            <div class="tracking-note">
+
+                No item information available.
+
+            </div>
+
+        `;
+
+    }
+
+
+
+    // =====================================
+    // VALUES
+    // =====================================
+
+    const subtotal =
+        Number(order.subtotal) || 0;
+
+
+    const deliveryFee =
+        Number(order.delivery_fee) || 0;
+
+
+    const total =
+        Number(order.total) || 0;
+
+
+    const paymentStatus =
+        order.payment_status ||
+        "Pending";
+
+
+    const orderStatus =
+        order.order_status ||
+        "Pending";
+
+
+    const paymentMethod =
+        order.payment_method ||
+        "Not specified";
+
+
+    const orderDate =
+        order.created_at
+            ? new Date(
+                order.created_at
+            ).toLocaleString()
+            : "N/A";
+
+
+
+    // =====================================
+    // CUSTOMER LOCATION
+    // =====================================
+
+    const location =
+        [
+
+            order.state,
+
+            order.local_government
+
+        ]
+
+        .filter(Boolean)
+
+        .join(" - ");
+
+
+
+    // =====================================
+    // TOTAL DISPLAY
+    // =====================================
+
+    const subtotalDisplay =
+        "₦" +
+        subtotal.toLocaleString();
+
+
+    const deliveryDisplay =
+        "₦" +
+        deliveryFee.toLocaleString();
+
+
+    const totalDisplay =
+        "₦" +
+        total.toLocaleString();
+
+
+
+    // =====================================
+    // DISPLAY
+    // =====================================
+
+    trackingResult.innerHTML = `
+
+        <div class="success-message">
+
+            Order found successfully.
+
+        </div>
+
+
+        <div class="order-card">
+
+
+            <h2>
+
+                Order Found
+
+            </h2>
+
+
+
+            <div class="order-row">
+
+                <span>
+                    Order Number
+                </span>
+
+                <strong>
+
+                    ${escapeHtml(
+                        order.order_number
+                    )}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="order-row">
+
+                <span>
+                    Customer
+                </span>
+
+                <strong>
+
+                    ${escapeHtml(
+                        order.customer_name
+                    )}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="order-row">
+
+                <span>
+                    State
+                </span>
+
+                <strong>
+
+                    ${escapeHtml(
+                        order.state
+                    )}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="order-row">
+
+                <span>
+                    Local Government
+                </span>
+
+                <strong>
+
+                    ${escapeHtml(
+                        order.local_government
+                    )}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="order-row">
+
+                <span>
+                    Delivery Address
+                </span>
+
+                <strong>
+
+                    ${escapeHtml(
+                        order.customer_address
+                    )}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="order-row">
+
+                <span>
+                    Payment Method
+                </span>
+
+                <strong>
+
+                    ${escapeHtml(
+                        paymentMethod
+                    )}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="order-row">
+
+                <span>
+                    Payment Status
+                </span>
+
+                <strong>
+
+                    ${escapeHtml(
+                        paymentStatus
+                    )}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="order-row">
+
+                <span>
+                    Order Status
+                </span>
+
+                <strong>
+
+                    <span class="status">
+
+                        ${escapeHtml(
+                            orderStatus
+                        )}
+
+                    </span>
+
+                </strong>
+
+            </div>
+
+
+
+            <h3 class="items-title">
+
+                Ordered Items
+
+            </h3>
+
+
+
+            ${itemsHTML}
+
+
+
+            <div class="order-row">
+
+                <span>
+                    Subtotal
+                </span>
+
+                <strong>
+
+                    ${subtotalDisplay}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="order-row">
+
+                <span>
+                    Delivery
+                </span>
+
+                <strong>
+
+                    ${deliveryDisplay}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="order-row">
+
+                <span>
+                    Total
+                </span>
+
+                <strong>
+
+                    ${totalDisplay}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="order-row">
+
+                <span>
+                    Order Date
+                </span>
+
+                <strong>
+
+                    ${escapeHtml(
+                        orderDate
+                    )}
+
+                </strong>
+
+            </div>
+
+
+
+            <div class="tracking-note">
+
+                Your order information is stored
+                securely in the FAITH'S GADGETS
+                order system.
+
+            </div>
+
+
+        </div>
+
+    `;
+
+}
+
+
+
+// =========================================
+// BUTTON
+// =========================================
+
+trackButton.addEventListener(
+    "click",
+    trackOrder
+);
+
+
+
+// =========================================
+// ENTER KEY
+// =========================================
+
+orderNumberInput.addEventListener(
+    "keydown",
+    function(event) {
+
+        if (
+            event.key === "Enter"
+        ) {
+
+            trackOrder();
+
+        }
+
+    }
+);
+
+</script>
+
+
+</body>
+
+</html>
